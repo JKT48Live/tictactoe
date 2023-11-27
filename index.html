@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,6 +144,36 @@
     </footer>
 
     <script>
+        function adjustLayout() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('member') === 'lia') {
+                document.querySelector('.bg').style.backgroundImage = 'url(https://telegra.ph/file/91fe6d96d862a830772c4.png)';
+                const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
+                const metaImg = "https://telegra.ph/file/76ecbb2ba342790ab83e3.png";
+
+                // Mengganti gambar pada meta tags
+                document.querySelector('meta[property="og:image"]').setAttribute('content', metaImg);
+                document.querySelector('meta[name="twitter:image"]').setAttribute('content', metaImg);
+
+                if (window.innerWidth > 600) {
+                    // Untuk layar lebar (non-seluler)
+                    ticTacToeBoard.style.marginTop = '-280px';
+                    ticTacToeBoard.style.marginLeft = '170px';
+                    ticTacToeBoard.style.width = '50%'; 
+                    ticTacToeBoard.style.transform = 'scale(0.8)';
+                } else {
+                    // Untuk layar seluler
+                    ticTacToeBoard.style.marginTop = '-120px';
+                    ticTacToeBoard.style.marginLeft = '70px';
+                    ticTacToeBoard.style.width = '20%';
+                    ticTacToeBoard.style.transform = 'scale(0.8)';
+                }
+            }
+        }
+
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
+
         let win = false;
         let currentPlayer = '❌';
         const board = document.getElementById('tic-tac-toe-board');
