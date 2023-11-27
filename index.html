@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe Game</title>
+    <title>Tic Tac Toe Game - Freya JKT48</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Standard SEO Meta Tags -->
@@ -15,13 +14,13 @@
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://jkt48live.github.io/tictactoe">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Tic Tac Toe Game">
+    <meta property="og:title" content="Tic Tac Toe Game - Freya JKT48">
     <meta property="og:description" content="Enjoy a classic game of Tic Tac Toe! Play now and challenge your friends.">
     <meta property="og:image" content="https://telegra.ph/file/2cbf908817dc65161c445.png">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tic Tac Toe Game">
+    <meta name="twitter:title" content="Tic Tac Toe Game - Freya JKT48">
     <meta name="twitter:description" content="Enjoy a classic game of Tic Tac Toe! Play now and challenge your friends.">
     <meta name="twitter:image" content="https://telegra.ph/file/2cbf908817dc65161c445.png">
     <meta name="twitter:site" content="@JKT48LiveX">
@@ -144,36 +143,6 @@
     </footer>
 
     <script>
-        function adjustLayout() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('member') === 'lia') {
-                document.querySelector('.bg').style.backgroundImage = 'url(https://telegra.ph/file/91fe6d96d862a830772c4.png)';
-                const ticTacToeBoard = document.getElementById('tic-tac-toe-board');
-                const metaImg = "https://telegra.ph/file/76ecbb2ba342790ab83e3.png";
-
-                // Mengganti gambar pada meta tags
-                document.querySelector('meta[property="og:image"]').setAttribute('content', metaImg);
-                document.querySelector('meta[name="twitter:image"]').setAttribute('content', metaImg);
-
-                if (window.innerWidth > 600) {
-                    // Untuk layar lebar (non-seluler)
-                    ticTacToeBoard.style.marginTop = '-280px';
-                    ticTacToeBoard.style.marginLeft = '170px';
-                    ticTacToeBoard.style.width = '50%'; 
-                    ticTacToeBoard.style.transform = 'scale(0.8)';
-                } else {
-                    // Untuk layar seluler
-                    ticTacToeBoard.style.marginTop = '-120px';
-                    ticTacToeBoard.style.marginLeft = '70px';
-                    ticTacToeBoard.style.width = '20%';
-                    ticTacToeBoard.style.transform = 'scale(0.8)';
-                }
-            }
-        }
-
-        window.addEventListener('load', adjustLayout);
-        window.addEventListener('resize', adjustLayout);
-
         let win = false;
         let currentPlayer = '❌';
         const board = document.getElementById('tic-tac-toe-board');
