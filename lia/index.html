@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game - Aurellia JKT48</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Standard SEO Meta Tags -->
+    <meta name="description" content="Enjoy a classic game of Tic Tac Toe! Play now and challenge your friends.">
+    <meta name="keywords" content="Tic Tac Toe, Game, Fun, Play, Online Game">
+    <meta name="author" content="JKT48 Live">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://jkt48live.github.io/tictactoe">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tic Tac Toe Game - Aurellia JKT48">
+    <meta property="og:description" content="Enjoy a classic game of Tic Tac Toe! Play now and challenge your friends.">
+    <meta property="og:image" content="https://telegra.ph/file/76ecbb2ba342790ab83e3.png">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tic Tac Toe Game - Aurellia JKT48">
+    <meta name="twitter:description" content="Enjoy a classic game of Tic Tac Toe! Play now and challenge your friends.">
+    <meta name="twitter:image" content="https://telegra.ph/file/76ecbb2ba342790ab83e3.png">
+    <meta name="twitter:site" content="@JKT48LiveX">
+    <meta name="twitter:creator" content="@JKT48LiveX">
+
+    <link rel="icon" type="image/x-icon" href="https://telegra.ph/file/b6d02b1228c27548bd4cc.png">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .bg {
+            background-image: url('https://telegra.ph/file/91fe6d96d862a830772c4.png');
+            background-size: contain; 
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            width: 50%;
+            max-width: 250px;
+            margin-top: -280px;
+            margin-left: 170px;
+            transform: scale(0.8);
+            aspect-ratio: 1 / 1;
+        }
+        .tic-tac-toe-cell {
+            background: #fff;
+            text-align: left;
+            padding-left: 10px;
+            vertical-align: middle;
+            cursor: pointer; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px; 
+            height: 80px;
+            font-size: 3vw;
+            line-height: normal;
+            margin: 0;
+            padding: 0;
+            border: 1px solid #000;
+            aspect-ratio: 1 / 1;
+        }
+        .tic-tac-toe-cell span {
+            transform: translateX(-8px); 
+        }
+        .tic-tac-toe-cell::before {
+            content: '\00a0'; 
+        }
+        @media (max-width: 600px) { 
+            .tic-tac-toe-board {
+                width: 20%; 
+                max-width: 110px; 
+                margin-top: -120px;
+                margin-left: 70px;
+                transform: scale(0.8); 
+            }
+            .tic-tac-toe-cell {
+                width: 30px; 
+                height: 30px; 
+            }
+            .tic-tac-toe-cell span {
+                transform: translateX(-3px); 
+            }
+        }
+        footer {
+            padding: 5px 0;
+            background-color: #f8f9fa; 
+            color: #6c757d; 
+            border-top: 1px solid #e9ecef; 
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9em;
+            font-size: 0.8em; 
+            font-weight: normal; 
+        }
+    </style>
+</head>
+<body>
+    <div class="bg d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div id="tic-tac-toe-board" class="tic-tac-toe-board">
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+            <div class="tic-tac-toe-cell"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="winnerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Game Over</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="winnerMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="resetGame()">Play Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-4">
+        <p>Made with ❤️ by JKT48 Live</p>
+    </footer>
+
+    <script>
+        let win = false;
+        let currentPlayer = '❌';
+        const board = document.getElementById('tic-tac-toe-board');
+        const cells = board.getElementsByClassName('tic-tac-toe-cell');
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+            [0, 4, 8], [2, 4, 6] // diagonals
+        ];
+
+        const isBoardFull = () => {
+            return Array.from(cells).every(cell => cell.innerHTML.trim() !== '');
+        };
+
+        const checkForWin = () => {
+            let win = false;
+            for (let i = 0; i < winningCombinations.length; i++) {
+                const [a, b, c] = winningCombinations[i];
+                if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
+                    showWinner(cells[a].innerText);
+                    win = true;
+                    break;
+                }
+            }
+            
+            // If there's no win, check for a draw
+            if (!win && isBoardFull()) {
+                showDraw();
+            }
+        };
+
+        Array.from(cells).forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (this.innerHTML === '' && !isBoardFull() && !win) {
+                    this.innerHTML = `<span>${currentPlayer}</span>`; // Use template literal
+                    checkForWin();
+                    currentPlayer = currentPlayer === '❌' ? '⭕' : '❌';
+                }
+            });
+        });
+
+
+        const showWinner = winner => {
+            win = true;
+            const message = `${winner} wins!`;
+            document.getElementById('winnerMessage').innerText = message;
+            $('#winnerModal').modal('show');
+        };
+
+        const showDraw = () => {
+            document.getElementById('winnerMessage').innerText = "It's a draw!";
+            $('#winnerModal').modal('show');
+        };
+
+        const resetGame = () => {
+            Array.from(cells).forEach(cell => {
+                cell.innerText = '';
+            });
+            currentPlayer = '❌';
+            win = false;
+        };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
