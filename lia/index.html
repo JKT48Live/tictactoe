@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +32,21 @@
         body, html {
             height: 100%;
             margin: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f0f0f0; /* Example color */
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .member-dropdown select {
+            padding: 5px;
+            font-size: 16px;
         }
         .bg {
             background-image: url('https://telegra.ph/file/91fe6d96d862a830772c4.png');
@@ -107,6 +121,26 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Tic Tac Toe</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarMemberDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Member
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarMemberDropdown">
+                        <a class="dropdown-item" href="/tictactoe">Freya</a>
+                        <a class="dropdown-item" href="/tictactoe/lia">Aurellia</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>    
+
     <div class="bg d-flex align-items-center justify-content-center" style="height: 100vh;">
         <div id="tic-tac-toe-board" class="tic-tac-toe-board">
             <div class="tic-tac-toe-cell"></div>
@@ -143,7 +177,7 @@
 
     <footer class="text-center mt-4">
         <p>Made with ❤️ by JKT48 Live</p>
-    </footer>
+    </footer>    
 
     <script>
         let win = false;
@@ -209,7 +243,7 @@
         };
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
