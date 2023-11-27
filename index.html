@@ -59,8 +59,8 @@
             align-items: center;
             justify-content: center;
             width: 80px; 
-            height: 80px; 
-            font-size: 6vw;
+            height: 80px;
+            font-size: 4vw;
             line-height: normal;
             margin: 0;
             padding: 0;
@@ -68,8 +68,7 @@
             aspect-ratio: 1 / 1;
         }
         .tic-tac-toe-cell span {
-            display: inline-block;
-            transform: translateX(-6px); 
+            transform: translateX(-8px); 
         }
         .tic-tac-toe-cell::before {
             content: '\00a0'; 
@@ -145,46 +144,46 @@
 
     <script>
         let currentPlayer = 'X';
-        let board = document.getElementById('tic-tac-toe-board');
-        let cells = board.getElementsByClassName('tic-tac-toe-cell');
-        let winningCombinations = [
+        const board = document.getElementById('tic-tac-toe-board');
+        const cells = board.getElementsByClassName('tic-tac-toe-cell');
+        const winningCombinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
             [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
             [0, 4, 8], [2, 4, 6] // diagonals
         ];
 
-        function checkForWin() {
+        const checkForWin = () => {
             for (let i = 0; i < winningCombinations.length; i++) {
-                let [a, b, c] = winningCombinations[i];
+                const [a, b, c] = winningCombinations[i];
                 if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
                     showWinner(cells[a].innerText);
                     return;
                 }
             }
-        }
+        };
 
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].addEventListener('click', function() {
+        Array.from(cells).forEach(cell => {
+            cell.addEventListener('click', function() {
                 if (this.innerHTML === '') {
-                    this.innerHTML = '<span>' + currentPlayer + '</span>'; // Bungkus teks dalam span
+                    this.innerHTML = `<span>${currentPlayer}</span>`; // Use template literal
                     checkForWin();
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 }
             });
-        }
+        });
 
-        function showWinner(winner) {
-            let message = winner + " wins!";
+        const showWinner = winner => {
+            const message = `${winner} wins!`;
             document.getElementById('winnerMessage').innerText = message;
             $('#winnerModal').modal('show');
-        }
+        };
 
-        function resetGame() {
-            for (let i = 0; i < cells.length; i++) {
-                cells[i].innerText = '';
-            }
-            currentPlayer = 'X'; // Reset current player to 'X'
-        }
+        const resetGame = () => {
+            Array.from(cells).forEach(cell => {
+                cell.innerText = '';
+            });
+            currentPlayer = 'X';
+        };
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
