@@ -145,46 +145,46 @@
 
     <script>
         let currentPlayer = 'X';
-        const board = document.getElementById('tic-tac-toe-board');
-        const cells = board.getElementsByClassName('tic-tac-toe-cell');
-        const winningCombinations = [
+        let board = document.getElementById('tic-tac-toe-board');
+        let cells = board.getElementsByClassName('tic-tac-toe-cell');
+        let winningCombinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
             [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
             [0, 4, 8], [2, 4, 6] // diagonals
         ];
 
-        const checkForWin = () => {
+        function checkForWin() {
             for (let i = 0; i < winningCombinations.length; i++) {
-                const [a, b, c] = winningCombinations[i];
+                let [a, b, c] = winningCombinations[i];
                 if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
                     showWinner(cells[a].innerText);
                     return;
                 }
             }
-        };
+        }
 
-        Array.from(cells).forEach(cell => {
-            cell.addEventListener('click', function() {
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].addEventListener('click', function() {
                 if (this.innerHTML === '') {
-                    this.innerHTML = `<span>${currentPlayer}</span>`; // Use template literal
+                    this.innerHTML = '<span>' + currentPlayer + '</span>'; // Bungkus teks dalam span
                     checkForWin();
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 }
             });
-        });
+        }
 
-        const showWinner = winner => {
-            const message = `${winner} wins!`;
+        function showWinner(winner) {
+            let message = winner + " wins!";
             document.getElementById('winnerMessage').innerText = message;
             $('#winnerModal').modal('show');
-        };
+        }
 
-        const resetGame = () => {
-            Array.from(cells).forEach(cell => {
-                cell.innerText = '';
-            });
-            currentPlayer = 'X';
-        };
+        function resetGame() {
+            for (let i = 0; i < cells.length; i++) {
+                cells[i].innerText = '';
+            }
+            currentPlayer = 'X'; // Reset current player to 'X'
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
